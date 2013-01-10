@@ -27,7 +27,8 @@
 
   <cffunction name="generateSecretKey" access="public" output="false" returntype="string">
     <cfset _verifyGoogleAuthInited() />
-    <cfreturn variables.wheels.class.googleauthObj.generateSecretKey() />
+    <cfset this[variables.wheels.class.googleauth.secretKeyProperty] = variables.wheels.class.googleauthObj.generateSecretKey() />
+    <cfreturn this[variables.wheels.class.googleauth.secretKeyProperty] />
   </cffunction>
 
   <cffunction name="getQrBarcodeUrl" access="public" output="false" returntype="string">
@@ -68,6 +69,7 @@
       
       loc.paths = ArrayNew(1);
       loc.paths[1] = ExpandPath(loc.relativePluginPath & "lib/googleauth-0.0.1.jar");
+      loc.paths[2] = ExpandPath(loc.relativePluginPath & "lib/commons-codec-1.7.jar");
       
       // set the javaLoader to the request in case we use it again
       server.javaloader.googleauth = $createObjectFromRoot(path=loc.classPath, fileName="JavaLoader", method="init", loadPaths=loc.paths, loadColdFusionClassPath=false);
