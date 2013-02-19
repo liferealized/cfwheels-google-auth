@@ -31,6 +31,11 @@
     <cfreturn this[variables.wheels.class.googleauth.secretKeyProperty] />
   </cffunction>
 
+  <cffunction name="clearSecretKey" access="public" output="false" returntype="void">
+    <cfset _verifyGoogleAuthInited() />
+    <cfset this[variables.wheels.class.googleauth.secretKeyProperty] = "" />
+  </cffunction>
+
   <cffunction name="getQrBarcodeUrl" access="public" output="false" returntype="string">
     <cfargument name="host" type="string" required="false" default="#cgi.http_host#" />
     <cfargument name="user" type="string" required="false" default="#this[variables.wheels.class.googleauth.usernameProperty]#" />
