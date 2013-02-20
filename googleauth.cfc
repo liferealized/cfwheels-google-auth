@@ -47,7 +47,7 @@
   <cffunction name="checkCode" access="public" output="false" returntype="string">
     <cfargument name="code" type="string" required="true" />
     <cfargument name="secret" type="string" required="false" default="#this[variables.wheels.class.googleauth.secretKeyProperty]#" />
-    <cfargument name="ms" type="numeric" required="false" default="#getTickCount()#" />
+    <cfargument name="ms" type="numeric" required="false" default="#dateDiff('s', dateConvert('utc2Local', 'January 1 1970 00:00:00'), now()) * 1000#" />
     <cfset _verifyGoogleAuthInited() />
     <cfreturn variables.wheels.class.googleauthObj.check_code(arguments.secret, arguments.code, arguments.ms) />
   </cffunction>
