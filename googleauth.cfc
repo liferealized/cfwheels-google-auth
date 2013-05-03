@@ -10,6 +10,7 @@
   <cffunction name="googleAuth" access="public" output="false" returntype="void">
     <cfargument name="secretKeyProperty" type="string" required="true" />
     <cfargument name="usernameProperty" type="string" required="true" />
+    <cfargument name="windowSize" type="numeric" required="false" default="3" />
     <cfscript>
       var loc = {};
 
@@ -19,6 +20,9 @@
 
       if (!structKeyExists(variables.wheels.class, "googleauthObj"))
         variables.wheels.class.googleauthObj = _createGoogleAuthJavaLoader().create("com.warrenstrange.googleauth.GoogleAuthenticator").init();
+
+      // set the window size 
+      variables.wheels.class.googleauthObj.setWindowSize(arguments.windowSize);
 
       variables.wheels.class.googleauth = duplicate(arguments);
     </cfscript>
