@@ -2,11 +2,11 @@
 
   <cffunction name="init" access="public" output="false">
     <cfscript>
-      this.version = "1.1.7,1.1.8"; 
+      this.version = "1.1.7,1.1.8,1.4.5";
     </cfscript>
     <cfreturn this />
   </cffunction>
-  
+
   <cffunction name="googleAuth" access="public" output="false" returntype="void">
     <cfargument name="secretKeyProperty" type="string" required="true" />
     <cfargument name="usernameProperty" type="string" required="true" />
@@ -21,7 +21,7 @@
       if (!structKeyExists(variables.wheels.class, "googleauthObj"))
         variables.wheels.class.googleauthObj = _createGoogleAuthJavaLoader().create("com.warrenstrange.googleauth.GoogleAuthenticator").init();
 
-      // set the window size 
+      // set the window size
       variables.wheels.class.googleauthObj.setWindowSize(arguments.windowSize);
 
       variables.wheels.class.googleauth = duplicate(arguments);
@@ -66,23 +66,23 @@
   <cffunction name="_createGoogleAuthJavaLoader" access="public" output="false" returntype="any">
     <cfscript>
       var loc = {};
-      
+
       if (!StructKeyExists(server, "javaloader") || !IsStruct(server.javaloader))
         server.javaloader = {};
-      
+
       if (StructKeyExists(server.javaloader, "googleauth"))
         return server.javaloader.googleauth;
-      
+
       loc.relativePluginPath = application.wheels.webPath & application.wheels.pluginPath & "/googleauth/";
       loc.classPath = Replace(Replace(loc.relativePluginPath, "/", ".", "all") & "javaloader", ".", "", "one");
-      
+
       loc.paths = ArrayNew(1);
       loc.paths[1] = ExpandPath(loc.relativePluginPath & "lib/googleauth-0.0.1.jar");
-      
+
       // set the javaLoader to the request in case we use it again
       server.javaloader.googleauth = $createObjectFromRoot(path=loc.classPath, fileName="JavaLoader", method="init", loadPaths=loc.paths, loadColdFusionClassPath=false);
     </cfscript>
     <cfreturn server.javaloader.googleauth />
   </cffunction>
-  
+
 </cfcomponent>
